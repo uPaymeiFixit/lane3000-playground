@@ -1,0 +1,44 @@
+{
+  "name": "lane3000-ts",
+  "version": "1.0.0",
+  "description": "TypeScript driver and games for an Ingenico Lane/3000 over USB serial (RBA protocol)",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint --max-warnings 0 .",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm run lint && npm test",
+    "lane": "node dist/cli.js lane",
+    "game-screen": "node dist/cli.js game-screen",
+    "snake": "node dist/cli.js snake",
+    "maze": "node dist/cli.js maze",
+    "life": "node dist/cli.js life",
+    "show-image": "node dist/cli.js show-image",
+    "io-demo": "node dist/cli.js io-demo",
+    "card-test": "node dist/cli.js card-test",
+    "light-test": "node dist/cli.js light-test",
+    "lock-probe": "node dist/cli.js lock-probe",
+    "maze-script": "node dist/cli.js maze-script",
+    "coin-grab": "node dist/cli.js coin-grab",
+    "skimmer-hunt": "node dist/cli.js skimmer-hunt"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^1.2.0",
+    "serialport": "^13.0.0",
+    "sharp": "^0.35.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.6",
+    "eslint": "^10.15.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.74.0",
+    "vitest": "^5.1.1"
+  }
+}
