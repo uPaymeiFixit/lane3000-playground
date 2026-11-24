@@ -11,6 +11,7 @@ the Mac sends the same host commands a point-of-sale system would.
 | `lane.py` | Driver for the RBA serial protocol (standard library only) |
 | `game_screen.py` | Installs `GAME.K3Z`, a full-screen image layout with every key enabled; frame/key helper |
 | `snake.py` | Real-time full-screen Snake (~4.5 frames/s) |
+| `life.py` | Four-colour Game of Life; pause (GREEN), then swipe = glider gun, tap = splash, insert = kaleidoscope |
 | `maze.py` | Random full-screen maze, a new one every game (~0.25 s per move) |
 | `maze_script.py` | Maze as a generated RBA script — does NOT run on this unit (no `26.x` support) |
 | `coin_grab.py` | Early text-grid experiment (superseded: ASCII looks bad on this screen) |
@@ -27,6 +28,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python game_screen.py --install    # once: uploads GAME.K3Z + images, reboots the terminal
 .venv/bin/python snake.py
 .venv/bin/python maze.py
+.venv/bin/python life.py
 .venv/bin/python game_screen.py --uninstall  # removes those files, reboots
 .venv/bin/python show_image.py --restore     # puts the original AD13.JPG ad back
 ```
@@ -112,6 +114,10 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
   `lane.write_file` sends `15.6` and retries automatically (prompting "Please remove card" on
   `MSG.K3Z` if the card is still in). Verified live: swipe, then the screen updates with no
   reboot; 10 taps in a row, each followed by a screen update.
+- Cancelling an armed read (`15.6`) costs ~0.5 s before the next upload, and arming the tap
+  reader lights the contactless LEDs. So don't re-arm the readers every frame: animate with
+  `24.x` (keys only) and arm `23.x` only while the game waits (`life.py` arms them on pause).
+  While armed, keys still arrive, as `23.3<key>` (e.g. `23.3\r` for green).
 - Chip insert is unreliable for games: once it returned `23.0S`, once the terminal started its
   own payment flow, never replied to `23.x`, and showed "Transaction cancelled" with the keys
   dead when the card was pulled. Use swipe and tap as game inputs, not chip insert.
