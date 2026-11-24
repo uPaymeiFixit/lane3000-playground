@@ -21,7 +21,7 @@ the Mac sends the same host commands a point-of-sale system would.
 | `lock_probe.py` | Experiments that found `15.6` clears the post-card-read upload lock |
 | `io_demo.py` | Beeps, lights, audio and card-reader experiments (see its docstring for results) |
 | `show_image.py` | Full-screen images on the terminal, plus a frame-rate test |
-| `backups/AD13.JPG` | Original ad image that `show_image.py` overwrites; restore with `--restore` |
+| `backups/` | Made on the first `show_image` run: a local copy of your terminal's original `AD13.JPG` ad (git-ignored: it's Ingenico's image), used by `--restore` |
 
 ```bash
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
@@ -195,7 +195,7 @@ Differences from the Python:
 
 - Added by us in `/HOST`: `GAME.K3Z`, `GAME.PNG`, `GAMEBTN.PNG` (remove with
   `game_screen.py --uninstall`).
-- `AD13.JPG` (an ad slot) holds a test image; the original is in `backups/AD13.JPG`
+- `AD13.JPG` (an ad slot) holds a test image; the original is in `backups/AD13.JPG` (local only, not in the repo)
   (restore with `show_image.py --restore`).
 - No settings were changed. Variable 412 (contactless) resets on reboot.
 
