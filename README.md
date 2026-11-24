@@ -35,31 +35,31 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 
 ## TypeScript version
 
-`ts/` holds a strict-TypeScript port of every Python program (Node 24, ESM). The Python files
-stay until the port is verified on the terminal.
+`ts/` holds a strict-TypeScript port of every Python program. It runs on **Bun** (1.3+), which
+executes the `.ts` sources directly: no build step and no Node.js. The Python files stay as the
+original reference.
 
 ```bash
 cd ts
-npm install
-npm run build                      # tsc -> ts/dist
-npm run check                      # typecheck + eslint (strictTypeChecked) + vitest
+bun install
+bun run check                      # tsc --noEmit + eslint (strictTypeChecked) + bun test
 
-npm run lane -- -v                 # unit data (python3 lane.py -v)
-npm run game-screen -- --install   # same flags as game_screen.py: --install/--uninstall/--keytest
-npm run snake                      # also: npm run snake -- --preview
-npm run maze
-npm run life
-npm run show-image -- --test-card  # photo.png / --bounce 20 / --restore
-npm run io-demo -- --beeps         # --lights / --music / --cards
-npm run card-test -- 120 M
-npm run light-test -- --jingle     # --lights
-npm run lock-probe -- trigger MS   # unlock <msg>... / reboot  (FS in <msg> = 0x1C)
-npm run maze-script -- --print     # --install-form / --detach
-npm run coin-grab -- --preview
-npm run skimmer-hunt -- --preview
+bun run lane -v                    # unit data (python3 lane.py -v)
+bun run game-screen --install      # same flags as game_screen.py: --install/--uninstall/--keytest
+bun run snake                      # also: bun run snake --preview
+bun run maze
+bun run life
+bun run show-image --test-card     # photo.png / --bounce 20 / --restore
+bun run io-demo --beeps            # --lights / --music / --cards
+bun run card-test 120 M
+bun run light-test --jingle        # --lights
+bun run lock-probe trigger MS      # unlock <msg>... / reboot  (FS in <msg> = 0x1C)
+bun run maze-script --print        # --install-form / --detach
+bun run coin-grab --preview
+bun run skimmer-hunt --preview
 ```
 
-Every program is also `node dist/cli.js <name> [args]`. `--preview` files land in the current
+Every program is also `bun src/cli.ts <name> [args]`. `--preview` files land in the current
 directory, as with the Python. Layout:
 
 | Path | What it is |
@@ -68,14 +68,23 @@ directory, as with the Python. Layout:
 | `src/protocol/messages.ts` | Message-id unions, typed replies, 23.x classification, 24.x builder (< 247 bytes) |
 | `src/protocol/file-encoding.ts` | 62.x eight-bit encoding, FF-safe block splitting, RBA file names |
 | `src/protocol/lane.ts` | Async driver: ACK/NAK + resend, reply routing, 62.7 -> 15.6 retry |
-| `src/protocol/serial.ts` | `serialport` transport, port discovery, wait-after-reboot |
+| `src/protocol/serial.ts` | Serial transport (device file + `stty` raw mode), port discovery via `ioreg`, wait-after-reboot |
 | `src/gfx/` | Pillow-compatible raster (same ellipse/line algorithms), text via `@napi-rs/canvas`, PNG/JPEG via `sharp` |
 | `src/programs/` | One module per Python program |
-| `test/` | vitest, including a fake terminal speaking real RBA framing |
+| `test/` | `bun test`, including a fake terminal speaking real RBA framing |
+
+Why no `serialport` package: its native binding calls libuv's `uv_default_loop`, which Bun
+doesn't implement ([oven-sh/bun#18546](https://github.com/oven-sh/bun/issues/18546)), so Bun
+crashes on open. `serial.ts` opens `/dev/cu.usbmodem*` directly and sets raw mode with
+`stty raw -echo 115200 min 0 time 1` while the file is open (the shell form of Python's
+`termios`); `min 0 time 1` makes each read return within 0.1 s so close() is clean. `tsconfig`
+keeps NodeNext module resolution: with `bundler` resolution typescript-eslint loses a
+dependency's types.
 
 Differences from the Python:
 
-- Port discovery prefers USB devices with Ingenico's vendor id (`0b00`) and checks that `07.`
+- Port discovery asks macOS's IORegistry (`ioreg`) for serial ports under a USB device with
+  Ingenico's vendor id (`0x0b00` = 2816), then checks that `07.`
   answers `INGNAR`/`L3000`; it never writes to other `cu.usbmodem*` devices when an Ingenico
   one is present.
 - 23.x replies are reduced to exit type + reader letter (or key) as they arrive, inside the

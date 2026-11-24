@@ -18,8 +18,8 @@ Keys (the four keys under the screen):
     [ - ] F1 = left    [ ^ ] F2 = up    [ v ] F3 = down    [ - ] F4 = right
     GREEN = new game   RED = quit
 
-Run:   npm run coin-grab                (plays on the terminal)
-       npm run coin-grab -- --preview   (prints frames here; no terminal needed)`;
+Run:   bun run coin-grab                (plays on the terminal)
+       bun run coin-grab --preview   (prints frames here; no terminal needed)`;
 
 /** Logical cells; each is drawn 2 characters wide -> "#" + 34 + "#" = 36 chars. */
 export const COLS = 17;

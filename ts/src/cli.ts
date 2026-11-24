@@ -1,7 +1,7 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 /**
- * One entry point for every program:  node dist/cli.js <program> [args...]
- * (or `npm run <program> -- [args...]`).
+ * One entry point for every program:  bun src/cli.ts <program> [args...]
+ * (or `bun run <program> [args...]`).
  */
 
 import { LaneError } from "./protocol/lane.js";
@@ -30,7 +30,7 @@ async function run(argv: readonly string[]): Promise<number> {
   const [name, ...args] = argv;
   const load = name === undefined ? undefined : PROGRAMS[name];
   if (load === undefined) {
-    console.error(`usage: node dist/cli.js <program> [args...]\nprograms: ${Object.keys(PROGRAMS).join(", ")}`);
+    console.error(`usage: bun src/cli.ts <program> [args...]\nprograms: ${Object.keys(PROGRAMS).join(", ")}`);
     return 2;
   }
   // First Ctrl-C: cancel what the program waits on, so its cleanup (15.0 etc.) still runs.

@@ -16,8 +16,8 @@ export const USAGE = `SKIMMER HUNT - a turn-based ASCII first-person maze shoote
 
 Keys:  F1 turn left   F2 forward   F3 back   F4 turn right   GREEN fire   RED quit
 
-Run:   npm run skimmer-hunt                (plays on the terminal)
-       npm run skimmer-hunt -- --preview   (prints a few frames here; no terminal needed)`;
+Run:   bun run skimmer-hunt                (plays on the terminal)
+       bun run skimmer-hunt --preview   (prints a few frames here; no terminal needed)`;
 
 /** 3D view size; each row gets a '|' border on both sides -> 38 columns. */
 export const W = 36;

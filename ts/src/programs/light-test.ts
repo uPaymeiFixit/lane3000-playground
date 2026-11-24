@@ -13,8 +13,8 @@ import { GameScreen, replyText, textScreen } from "./game-screen.js";
 
 export const USAGE = `Beep jingle + a slow, captioned light test for the Lane/3000.
 
-    npm run light-test -- --jingle   # four-tone jingle with the 51.x beep command
-    npm run light-test -- --lights   # one 92.x light command every few seconds, captioned on screen`;
+    bun run light-test --jingle   # four-tone jingle with the 51.x beep command
+    bun run light-test --lights   # one 92.x light command every few seconds, captioned on screen`;
 
 type Tone = "0" | "1" | "2" | "3";
 type Length = "0" | "1" | "2";

@@ -14,9 +14,9 @@ import { replyText, textScreen } from "./game-screen.js";
 
 export const USAGE = `Experiments on the post-card-read upload lock (62.x -> 62.7).
 
-    npm run lock-probe -- trigger <readers>       # arm readers (e.g. M, S, MS, C) 2 s, cancel, test upload
-    npm run lock-probe -- unlock <msg> [<msg>...]  # send each message, test upload after each
-    npm run lock-probe -- reboot
+    bun run lock-probe trigger <readers>       # arm readers (e.g. M, S, MS, C) 2 s, cancel, test upload
+    bun run lock-probe unlock <msg> [<msg>...]  # send each message, test upload after each
+    bun run lock-probe reboot
 
 In <msg>, the letters FS stand for the field separator (0x1C).`;
 

@@ -1,7 +1,8 @@
 import { createHash } from "node:crypto";
 
 import sharp from "sharp";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "bun:test";
+import { expectRejects } from "./reject.js";
 
 import { framePng, toJpeg } from "../src/gfx/encode.js";
 import { ellipseSpans, Raster } from "../src/gfx/raster.js";
@@ -59,7 +60,7 @@ describe("frame PNGs", () => {
   }
 
   it("refuses frames that are not 320x240", async () => {
-    await expect(framePng(new Raster(10, 10))).rejects.toThrow(RangeError);
+    await expectRejects(framePng(new Raster(10, 10)), RangeError);
   });
 
   it("show-image JPEGs are baseline 320x240", async () => {

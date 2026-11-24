@@ -24,10 +24,10 @@ import { replyText, textScreen } from "./game-screen.js";
 
 export const USAGE = `Other inputs and outputs on the Lane/3000: beeps, lights, music and card readers.
 
-    npm run io-demo -- --beeps    # 51.x: the four built-in tones                       WORKS
-    npm run io-demo -- --lights   # 92.x: LEDs, keypad light, backlight        no reply on our unit
-    npm run io-demo -- --music    # synthesize a chiptune, upload as OGG, play (72.x)  72.9 on our unit
-    npm run io-demo -- --cards    # 23.x: report swipe / insert events for 60 s  see card-test
+    bun run io-demo --beeps    # 51.x: the four built-in tones                       WORKS
+    bun run io-demo --lights   # 92.x: LEDs, keypad light, backlight        no reply on our unit
+    bun run io-demo --music    # synthesize a chiptune, upload as OGG, play (72.x)  72.9 on our unit
+    bun run io-demo --cards    # 23.x: report swipe / insert events for 60 s  see card-test
 
 Results on our Lane/3000 (Unified Payment Platform 6.80.09):
 - 51.x beeps work: 4200, 6000, 9000, 3800 Hz; 150/500/1000 ms. Too few tones for music.

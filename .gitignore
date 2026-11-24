@@ -4,7 +4,6 @@ __pycache__/
 preview.png
 preview_title.png
 ts/node_modules/
-ts/dist/
 chiptune.ogg
 .claude/
 backups/

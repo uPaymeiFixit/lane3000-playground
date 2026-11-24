@@ -22,10 +22,10 @@ How it works: RBA ships 13 ad screens (AD1.K3Z ... AD13.K3Z), each a single full
 320x240 image named AD<n>.JPG. We overwrite AD13.JPG with our own picture (62.x File Write,
 no reboot needed for images) and show the AD13.K3Z screen (24.x Form Entry).
 
-    npm run show-image -- --test-card        # generated test card
-    npm run show-image -- photo.png          # any image, resized/cropped to 320x240
-    npm run show-image -- --bounce 20        # frame-rate test: 20 frames of a bouncing ball
-    npm run show-image -- --restore          # put the original AD13.JPG back (backups/AD13.JPG)`;
+    bun run show-image --test-card        # generated test card
+    bun run show-image photo.png          # any image, resized/cropped to 320x240
+    bun run show-image --bounce 20        # frame-rate test: 20 frames of a bouncing ball
+    bun run show-image --restore          # put the original AD13.JPG back (backups/AD13.JPG)`;
 
 export const SLOT = "AD13";
 export const BACKUP = repoPath("backups", `${SLOT}.JPG`);

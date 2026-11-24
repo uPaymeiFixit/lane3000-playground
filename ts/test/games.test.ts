@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "bun:test";
 
 import { CH, CW, Maze, generate, solve } from "../src/programs/maze.js";
 import {
@@ -48,7 +48,7 @@ describe("maze", () => {
     for (const k of path) m.press(k);
     expect(m.won).toBe(true);
     expect(m.moves).toBe(path.length);
-    expect(path.length).toBe(solve(new Maze(new PyRandom(5))));
+    expect(solve(new Maze(new PyRandom(5)))).toBe(path.length);
   });
 });
 

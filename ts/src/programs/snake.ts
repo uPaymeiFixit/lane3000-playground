@@ -11,13 +11,13 @@ import { sleep } from "../util/interrupt.js";
 import { PyRandom, type Rng } from "../util/py-random.js";
 import { GameScreen, textScreen } from "./game-screen.js";
 
-export const USAGE = `Full-screen real-time Snake for an Ingenico Lane/3000 (needs \`npm run game-screen -- --install\` once).
+export const USAGE = `Full-screen real-time Snake for an Ingenico Lane/3000 (needs \`bun run game-screen --install\` once).
 
 Keys:  F1 left   F2 (up arrow) up   F3 (down arrow) down   F4 right
        GREEN start / restart   YELLOW pause   RED quit
 
-    npm run snake                  # play on the terminal
-    npm run snake -- --preview     # save a sample frame to preview.png, no terminal needed`;
+    bun run snake                  # play on the terminal
+    bun run snake --preview     # save a sample frame to preview.png, no terminal needed`;
 
 export const CELL = 20;
 export const COLS = 16; // 320 x 220 board under a 20 px score bar

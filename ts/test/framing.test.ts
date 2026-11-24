@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "bun:test";
 
 import { ACK, ETX, FrameParser, NAK, STX, encodeFrame, lrc, type FrameEvent } from "../src/protocol/framing.js";
 
@@ -6,7 +6,7 @@ describe("framing", () => {
   it("LRC is the XOR of every byte after STX, ETX included", () => {
     const f = encodeFrame("07.");
     expect([...f]).toEqual([STX, 0x30, 0x37, 0x2e, ETX, 0x30 ^ 0x37 ^ 0x2e ^ ETX]);
-    expect(lrc(f.subarray(1, f.length - 1))).toBe(f.at(-1));
+    expect(f.at(-1)).toBe(lrc(f.subarray(1, f.length - 1)));
   });
 
   it("maps message text one-to-one as latin-1", () => {

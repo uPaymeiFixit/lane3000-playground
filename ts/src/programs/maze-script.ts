@@ -17,10 +17,10 @@ import { chars, pyRepr, pyReprList } from "../util/py-repr.js";
 export const USAGE = `A maze that runs on the Lane/3000 by itself, using RBA's built-in script language.
 (Does NOT run on our unit: no 26.x support. Kept as a record of the attempt.)
 
-    npm run maze-script -- --install-form   # once: upload MAZE.K3Z and reboot
-    npm run maze-script                     # upload MAZE.TXT, start it, wait for the result
-    npm run maze-script -- --detach         # start it and exit immediately (the Mac can go away)
-    npm run maze-script -- --print          # just print the generated script`;
+    bun run maze-script --install-form   # once: upload MAZE.K3Z and reboot
+    bun run maze-script                     # upload MAZE.TXT, start it, wait for the result
+    bun run maze-script --detach         # start it and exit immediately (the Mac can go away)
+    bun run maze-script --print          # just print the generated script`;
 
 export const MAZE: readonly string[] = [
   "###########",
@@ -131,7 +131,7 @@ async function installForm(): Promise<void> {
     await lane.softReset();
     const btn = await lane.readBinary("/HOST/GAMEBTN.PNG");
     if (btn === null || btn.length === 0) {
-      throw new LaneError("GAMEBTN.PNG missing - run `npm run game-screen -- --install` first");
+      throw new LaneError("GAMEBTN.PNG missing - run `bun run game-screen --install` first");
     }
     await lane.writeFile("MAZE.K3Z", Buffer.from(FORM, "latin1"));
     console.log("Uploaded MAZE.K3Z - rebooting terminal...");

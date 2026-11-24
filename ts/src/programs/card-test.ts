@@ -20,7 +20,7 @@ import { clock } from "./show-image.js";
 
 export const USAGE = `Card reader test that survives the upload lock.
 
-    npm run card-test -- [seconds] [readers]   # default 180 s, readers MSC (M swipe, S chip, C tap)`;
+    bun run card-test [seconds] [readers]   # default 180 s, readers MSC (M swipe, S chip, C tap)`;
 
 /** 51.<tone><length> per reader: low = swipe, middle = chip, high = tap. */
 const BEEP: Readonly<Record<string, string>> = { M: "00", S: "10", Q: "10", C: "20", E: "20", m: "20" };

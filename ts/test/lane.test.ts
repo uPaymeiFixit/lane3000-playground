@@ -1,10 +1,11 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "bun:test";
 
 import { decode8, isEncoded8 } from "../src/protocol/file-encoding.js";
 import { FS, latin1Bytes } from "../src/protocol/framing.js";
 import { Lane, LaneError } from "../src/protocol/lane.js";
 import { InterruptedError, interruptPending, sleep } from "../src/util/interrupt.js";
 import { FakeTerminal, flush, type Script } from "./fake-terminal.js";
+import { expectRejects, rejectionOf } from "./reject.js";
 
 const FAKE_PAN = "4111111111111111";
 const FAKE_TRACK = `%B${FAKE_PAN}^TEST/CARD^25121010000000000000?`;
@@ -61,7 +62,7 @@ describe("Lane over a fake terminal", () => {
 
   it("resends on silence and gives up after 3 tries", async () => {
     const { lane: l, term } = lane(() => ({ answer: "silent" }), { ackTimeoutMs: 30 });
-    await expect(l.send("51.10")).rejects.toThrow(LaneError);
+    await expectRejects(l.send("51.10"), LaneError);
     expect(term.received).toEqual(["51.10", "51.10", "51.10"]);
   });
 
@@ -154,7 +155,7 @@ describe("Lane over a fake terminal", () => {
 
   it("fails a write that the terminal rejects", async () => {
     const { lane: l } = lane((body) => (body.startsWith("62.") ? { replies: ["62.1"] } : {}));
-    await expect(l.writeFile("GAME.PNG", Uint8Array.of(1))).rejects.toThrow(/block 1\/1/);
+    await expectRejects(l.writeFile("GAME.PNG", Uint8Array.of(1)), /block 1\/1/);
   });
 
   it("reads text and base64 files block by block (65.x)", async () => {
@@ -199,9 +200,7 @@ describe("Lane over a fake terminal", () => {
 
   it("24.x form requests over the size limit are refused before sending", async () => {
     const { lane: l, term } = lane(() => ({}));
-    await expect(l.showForm("BAMTV.K3Z", { texts: { PROMPTLINE1: "x".repeat(240) }, wait: false })).rejects.toThrow(
-      RangeError,
-    );
+    await expectRejects(l.showForm("BAMTV.K3Z", { texts: { PROMPTLINE1: "x".repeat(240) }, wait: false }), RangeError);
     expect(term.received).toEqual([]);
   });
 
@@ -210,12 +209,14 @@ describe("Lane over a fake terminal", () => {
     const waiting = l.recv("24", Number.POSITIVE_INFINITY);
     const sleeping = sleep(60_000);
     setTimeout(interruptPending, 10);
-    await expect(waiting).rejects.toBeInstanceOf(InterruptedError);
-    await expect(sleeping).rejects.toBeInstanceOf(InterruptedError);
+    // capture both rejections before awaiting either, so neither is reported as unhandled
+    const [waitErr, sleepErr] = await Promise.all([rejectionOf(waiting), rejectionOf(sleeping)]);
+    expect(waitErr).toBeInstanceOf(InterruptedError);
+    expect(sleepErr).toBeInstanceOf(InterruptedError);
     await l.softReset(); // cleanup in a finally block can still talk to the terminal
     expect(term.received).toEqual(["15.0"]);
     await l.close();
     expect(term.closed).toBe(true);
-    await expect(l.recv("24", 10)).rejects.toThrow(LaneError);
+    await expectRejects(l.recv("24", 10), LaneError);
   });
 });

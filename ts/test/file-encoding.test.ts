@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "bun:test";
 
 import {
   decode8,
@@ -91,8 +91,8 @@ describe("RBA eight-bit file encoding", () => {
   });
 
   it("file names are upper-cased and at most 15 characters", () => {
-    expect(rbaFileName("game.png")).toBe("GAME.PNG");
-    expect(rbaFileName("CHIPTUNE.OGG")).toBe("CHIPTUNE.OGG");
+    expect<string>(rbaFileName("game.png")).toBe("GAME.PNG");
+    expect<string>(rbaFileName("CHIPTUNE.OGG")).toBe("CHIPTUNE.OGG");
     expect(() => rbaFileName("A_VERY_LONG_NAME.PNG")).toThrow(RangeError);
     expect(() => rbaFileName("")).toThrow(RangeError);
     expect(() => rbaFileName("../HOST/X")).toThrow(RangeError);

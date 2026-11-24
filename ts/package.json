@@ -6,39 +6,36 @@
   "license": "UNLICENSED",
   "type": "module",
   "engines": {
-    "node": ">=24"
+    "bun": ">=1.3"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "typecheck": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint --max-warnings 0 .",
-    "test": "vitest run",
-    "check": "npm run typecheck && npm run lint && npm test",
-    "lane": "node dist/cli.js lane",
-    "game-screen": "node dist/cli.js game-screen",
-    "snake": "node dist/cli.js snake",
-    "maze": "node dist/cli.js maze",
-    "life": "node dist/cli.js life",
-    "show-image": "node dist/cli.js show-image",
-    "io-demo": "node dist/cli.js io-demo",
-    "card-test": "node dist/cli.js card-test",
-    "light-test": "node dist/cli.js light-test",
-    "lock-probe": "node dist/cli.js lock-probe",
-    "maze-script": "node dist/cli.js maze-script",
-    "coin-grab": "node dist/cli.js coin-grab",
-    "skimmer-hunt": "node dist/cli.js skimmer-hunt"
+    "test": "bun test --timeout 20000",
+    "check": "bun run typecheck && bun run lint && bun run test",
+    "lane": "bun src/cli.ts lane",
+    "game-screen": "bun src/cli.ts game-screen",
+    "snake": "bun src/cli.ts snake",
+    "maze": "bun src/cli.ts maze",
+    "life": "bun src/cli.ts life",
+    "show-image": "bun src/cli.ts show-image",
+    "io-demo": "bun src/cli.ts io-demo",
+    "card-test": "bun src/cli.ts card-test",
+    "light-test": "bun src/cli.ts light-test",
+    "lock-probe": "bun src/cli.ts lock-probe",
+    "maze-script": "bun src/cli.ts maze-script",
+    "coin-grab": "bun src/cli.ts coin-grab",
+    "skimmer-hunt": "bun src/cli.ts skimmer-hunt"
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.2.0",
-    "serialport": "^13.0.0",
     "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/node": "^26.6.6",
+    "@types/bun": "^1.4.5",
     "eslint": "^10.15.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.74.0",
-    "vitest": "^5.1.1"
+    "typescript-eslint": "^8.74.0"
   }
 }

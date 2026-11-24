@@ -12,14 +12,14 @@ import { GameScreen } from "./game-screen.js";
 
 export const USAGE = `Maze for an Ingenico Lane/3000, drawn as full-screen images from the Mac.
 
-Needs the full-screen layout once: \`npm run game-screen -- --install\`.
+Needs the full-screen layout once: \`bun run game-screen --install\`.
 Every game is a freshly generated maze. Steer the yellow ball to the green exit.
 
 Keys:  F1 left   F2 (up arrow) up   F3 (down arrow) down   F4 right
        GREEN new maze   RED quit
 
-    npm run maze                  # play on the terminal
-    npm run maze -- --preview     # save a sample frame to preview.png`;
+    bun run maze                  # play on the terminal
+    bun run maze --preview     # save a sample frame to preview.png`;
 
 /** Maze cells -> (2*CW+1) x (2*CH+1) = 25 x 17 tiles. */
 export const CW = 12;

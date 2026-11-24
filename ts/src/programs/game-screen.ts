@@ -17,9 +17,9 @@ import { pyRepr, pyReprList } from "../util/py-repr.js";
 
 export const USAGE = `Full-screen graphics + key input on an Ingenico Lane/3000 running RBA.
 
-    npm run game-screen -- --install     # upload GAME.K3Z + images, then reboot the terminal
-    npm run game-screen -- --uninstall   # delete those files, then reboot
-    npm run game-screen -- --keytest     # show pressed keys on screen for 60 s
+    bun run game-screen --install     # upload GAME.K3Z + images, then reboot the terminal
+    bun run game-screen --uninstall   # delete those files, then reboot
+    bun run game-screen --keytest     # show pressed keys on screen for 60 s
 
 Key codes reported:  F1 'L'  F2 'U'  F3 'D'  F4 'R'  green '\\r'  yellow '\\x08'  red '\\x1b'`;
 

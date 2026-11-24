@@ -48,8 +48,8 @@ Keys: GREEN pause/resume   YELLOW clear   UP reseed   DOWN single step (while pa
 
 Card data is discarded: only the exit type and reader letter of each 23.x reply are used.
 
-    npm run life                  # play on the terminal (needs \`game-screen --install\` once)
-    npm run life -- --preview     # save a sample frame to preview.png`;
+    bun run life                  # play on the terminal (needs \`game-screen --install\` once)
+    bun run life --preview     # save a sample frame to preview.png`;
 
 /** 40*8 = 320 wide, 24 + 27*8 = 240 tall. */
 export const COLS = 40;
