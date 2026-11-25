@@ -16,6 +16,7 @@ const PROGRAMS: Readonly<Record<string, () => Promise<{ main: Main }>>> = {
   snake: () => import("./programs/snake.js"),
   maze: () => import("./programs/maze.js"),
   life: () => import("./programs/life.js"),
+  raid: () => import("./programs/raid.js"),
   "show-image": () => import("./programs/show-image.js"),
   "io-demo": () => import("./programs/io-demo.js"),
   "card-test": () => import("./programs/card-test.js"),

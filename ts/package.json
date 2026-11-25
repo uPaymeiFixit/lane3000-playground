@@ -18,6 +18,7 @@
     "snake": "bun src/cli.ts snake",
     "maze": "bun src/cli.ts maze",
     "life": "bun src/cli.ts life",
+    "raid": "bun src/cli.ts raid",
     "show-image": "bun src/cli.ts show-image",
     "io-demo": "bun src/cli.ts io-demo",
     "card-test": "bun src/cli.ts card-test",
